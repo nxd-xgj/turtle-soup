@@ -113,14 +113,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $db->exec("CREATE TABLE IF NOT EXISTS game_records (id INT AUTO_INCREMENT PRIMARY KEY, room_id INT NOT NULL, user_id INT NOT NULL, turtle_id INT NOT NULL, questions_count INT DEFAULT 0, guessed ENUM('yes','no') DEFAULT 'no', score INT DEFAULT 0, played_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
 
             // 导种子数据
-            $seedFile = __DIR__ . '/seed.php';
+            $jsonFile = __DIR__ . '/data/turtles.json';
             $imported = 0;
-            if (file_exists($seedFile)) {
-                $db->exec('DELETE FROM turtles');
-                $db->exec('ALTER TABLE turtles AUTO_INCREMENT = 1');
-                define('SEED_DATA_ONLY', true);
-                $entries = require $seedFile;
+            if (file_exists($jsonFile)) {
+                $jsonData = file_get_contents($jsonFile);
+                $entries = json_decode($jsonData, true);
                 if (is_array($entries)) {
+                    $db->exec('DELETE FROM turtles');
+                    $db->exec('ALTER TABLE turtles AUTO_INCREMENT = 1');
                     $st = $db->prepare('INSERT INTO turtles (title,surface,bottom,difficulty,tags,ai_prompt,ai_playable,parent_id,status) VALUES (?,?,?,?,?,?,?,?,"published")');
                     foreach ($entries as $e) {
                         try { $st->execute([$e['title'],$e['surface'],$e['bottom'],$e['difficulty']??1,$e['tags']??'',$e['ai_prompt']??null,$e['ai_playable']??1,$e['parent_id']??null]); $imported++; } catch(PDOException $x) {}
