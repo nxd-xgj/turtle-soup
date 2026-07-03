@@ -40,7 +40,7 @@ $unplayable = $total - $playable;
 echo "开始导入海龟汤种子数据...\n";
 echo "总计: {$total} 条 (AI可玩: {$playable}, 不可玩: {$unplayable})\n\n";
 
-$stmt = $db->prepare('INSERT INTO turtles (title, surface, bottom, difficulty, tags, ai_prompt, ai_playable, parent_id, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)');
+$stmt = $db->prepare('INSERT INTO turtles (title, surface, bottom, difficulty, tags, ai_prompt, ai_playable, key_point, parent_id, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
 
 $inserted = 0; $skipped = 0;
 foreach ($entries as $entry) {
@@ -50,6 +50,7 @@ foreach ($entries as $entry) {
             $entry['difficulty'] ?? 1, $entry['tags'] ?? '',
             $entry['ai_prompt'] ?? null,
             $entry['ai_playable'] ?? 1,
+            $entry['key_point'] ?? null,
             $entry['parent_id'] ?? null,
             'published'
         ]);

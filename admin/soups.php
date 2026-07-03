@@ -33,10 +33,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 if ($action === 'add') {
                     $stmt = $db->prepare('INSERT INTO turtles (title, surface, bottom, clues, difficulty, tags, ai_prompt, ai_playable, author_id, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
                     $stmt->execute([$title, $surface, $bottom, $clues, max(1, min(3, $difficulty)), $tags, input('ai_prompt') ?: null, (int)input('ai_playable', '1'), $_SESSION['user_id'], $status]);
+                    // 更新关键点
+                    $kp = input('key_point');
+                    if ($kp) {
+                        $db->prepare('UPDATE turtles SET key_point = ? WHERE id = ?')->execute([$kp, $db->lastInsertId()]);
+                    }
                     $message = '汤谱添加成功！';
                 } else {
                     $stmt = $db->prepare('UPDATE turtles SET title=?, surface=?, bottom=?, clues=?, difficulty=?, tags=?, ai_prompt=?, ai_playable=?, status=? WHERE id=?');
                     $stmt->execute([$title, $surface, $bottom, $clues, max(1, min(3, $difficulty)), $tags, input('ai_prompt') ?: null, (int)input('ai_playable', '1'), $status, $soup_id]);
+                    // 更新关键点
+                    $kp = input('key_point');
+                    if ($kp) {
+                        $db->prepare('UPDATE turtles SET key_point = ? WHERE id = ?')->execute([$kp, $soup_id]);
+                    }
                     $message = '汤谱更新成功！';
                 }
                 $messageType = 'success';
@@ -155,8 +165,14 @@ if (isset($_GET['edit'])) {
 
                     <div class="form-group">
                         <label>🤖 AI 主持人提示词</label>
-                        <textarea name="ai_prompt" class="form-input" rows="6" placeholder="AI 主持模式下的提示词模板，包含汤面、汤底和判断线索"><?= h($editTurtle['ai_prompt'] ?? '') ?></textarea>
-                        <p class="input-hint mt-1">提示词结构：开场设定 → 汤面 → 汤底 → 关键判断线索 → 主持规则。留空则使用离线关键词匹配。</p>
+                        <textarea name="ai_prompt" class="form-input" rows="6" placeholder="格式：\n【汤面】\n...\n\n【汤底】\n...\n\n【关键点】\n..."><?= h($editTurtle['ai_prompt'] ?? '') ?></textarea>
+                        <p class="input-hint mt-1">三段式结构：<b>【汤面】</b> → <b>【汤底】</b> → <b>【关键点】</b>。AI 用系统角色设定+此数据主持游戏。</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label>🎯 关键点</label>
+                        <input type="text" name="key_point" class="form-input" placeholder="玩家猜中这个即获胜（例：主角是盲人，被毯子压住）" value="<?= h($editTurtle['key_point'] ?? '') ?>">
+                        <p class="input-hint mt-1">玩家不需要说出完整汤底，猜中关键点就算赢。</p>
                     </div>
 
                     <div class="form-group">

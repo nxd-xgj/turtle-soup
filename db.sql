@@ -31,8 +31,9 @@ CREATE TABLE IF NOT EXISTS turtles (
     play_count INT DEFAULT 0,
     like_count INT DEFAULT 0,
     rating DECIMAL(2,1) DEFAULT 0.0,
-    ai_prompt TEXT DEFAULT NULL COMMENT '预计算的 AI 主持提示词',
+    ai_prompt TEXT DEFAULT NULL COMMENT '三段式提示词：汤面 · 汤底 · 关键点',
     ai_playable TINYINT DEFAULT 1 COMMENT 'AI 能否主持: 1=可以 0=不适合',
+    key_point VARCHAR(500) DEFAULT NULL COMMENT '关键点：玩家猜中即获胜',
     parent_id INT DEFAULT NULL COMMENT '多合一汤的子条目指向父汤 ID',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
