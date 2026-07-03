@@ -29,7 +29,7 @@ try {
 <!-- 英雄区 -->
 <section class="hero">
     <h1>🐢 海龟汤推理馆</h1>
-    <p>和朋友一起，揭开每一碗汤的谜底。<br>支持 AI 主持和真人主持双模式，免费畅玩。</p>
+    <p>和朋友一起，揭开每一碗汤的汤底。<br>支持 AI 主持和真人主持双模式，免费畅玩。</p>
     <div class="hero-actions">
         <?php if ($user): ?>
         <a href="/game/create.php" class="btn btn-primary btn-lg">🎮 创建房间</a>
@@ -76,7 +76,7 @@ try {
         <div class="feature-card">
             <div class="icon">💬</div>
             <h3>实时聊天推理</h3>
-            <p>聊天和提问分离设计，边聊边问，协作推理，找出谜底</p>
+            <p>聊天和提问分离设计，边聊边问，协作推理，找出汤底</p>
         </div>
         <div class="feature-card">
             <div class="icon">📚</div>

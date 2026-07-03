@@ -198,7 +198,7 @@ function callAILegacy(string $surface, string $bottom, string $clues, string $qu
         return simpleMatchLegacy($surface, $bottom, $clues, $question);
     }
 
-    $prompt = "你是一个海龟汤游戏的主持人。\n汤面（谜面）：{$surface}\n汤底（谜底）：{$bottom}\n关键线索：{$clues}\n\n玩家提问：{$question}\n\n请判断玩家的提问，回答「是」「否」或「无关」。\n规则：\n- 如果玩家的提问与谜底的关键线索直接相关，回答「是」\n- 如果玩家的提问与谜底矛盾或明显错误，回答「否」\n- 如果玩家的提问与谜底毫无关系或者不构成有效提问，回答「无关」\n- 只回复「是」「否」「无关」三个字中的一个，不要输出任何其他内容";
+    $prompt = "你是一个海龟汤游戏的主持人。\n汤面：{$surface}\n汤底：{$bottom}\n关键线索：{$clues}\n\n玩家提问：{$question}\n\n请判断玩家的提问，回答「是」「否」或「无关」。\n规则：\n- 如果玩家的提问与汤底的关键线索直接相关，回答「是」\n- 如果玩家的提问与汤底矛盾或明显错误，回答「否」\n- 如果玩家的提问与汤底毫无关系或者不构成有效提问，回答「无关」\n- 只回复「是」「否」「无关」三个字中的一个，不要输出任何其他内容";
 
     $ch = curl_init(AI_API_ENDPOINT);
     curl_setopt_array($ch, [

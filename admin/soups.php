@@ -130,12 +130,12 @@ if (isset($_GET['edit'])) {
                     </div>
 
                     <div class="form-group">
-                        <label>汤面（谜面）</label>
+                        <label>汤面</label>
                         <textarea name="surface" class="form-input" rows="3" required><?= h($editTurtle['surface'] ?? '') ?></textarea>
                     </div>
 
                     <div class="form-group">
-                        <label>汤底（谜底）</label>
+                        <label>汤底</label>
                         <textarea name="bottom" class="form-input" rows="4" required><?= h($editTurtle['bottom'] ?? '') ?></textarea>
                     </div>
 

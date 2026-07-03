@@ -100,7 +100,7 @@ try {
 
     <!-- 汤面 -->
     <div class="card" style="border-left: 3px solid var(--orange);">
-        <h3 style="font-size: 1rem; color: var(--orange); margin-bottom: 12px;">📜 汤面（谜面）</h3>
+        <h3 style="font-size: 1rem; color: var(--orange); margin-bottom: 12px;">📜 汤面</h3>
         <p style="font-size: 1.05rem; line-height: 2; white-space: pre-wrap;"><?= h($turtle['surface']) ?></p>
     </div>
 
@@ -108,13 +108,13 @@ try {
     <div class="card" style="border-left: 3px solid var(--green);">
         <div style="cursor: pointer;" onclick="toggleBottom()">
             <h3 style="font-size: 1rem; color: var(--green); margin-bottom: 0; display: flex; align-items: center; gap: 8px;">
-                🔍 汤底（谜底）
+                🔍 汤底
                 <span id="bottom-toggle" style="font-size: 0.8rem; color: var(--text-muted);">点击展开</span>
             </h3>
         </div>
         <div id="bottom-content" style="display: none; margin-top: 12px;">
             <div class="alert alert-info">
-                ⚠️ <strong>剧透警告：</strong>以下是完整谜底，推荐先尝试推理再看！
+                ⚠️ <strong>剧透警告：</strong>以下是完整汤底，推荐先尝试推理再看！
             </div>
             <p style="font-size: 1.05rem; line-height: 2; white-space: pre-wrap;"><?= h($turtle['bottom']) ?></p>
         </div>
