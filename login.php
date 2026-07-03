@@ -31,7 +31,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $error = '该账号已被封禁';
                 } else {
                     $_SESSION['user_id'] = $user['id'];
-                    header('Location: /index.php');
+                    // 管理员跳转后台，普通用户跳首页
+                    $redirect = ($user['role'] === 'admin') ? '/admin/index.php' : '/index.php';
+                    header("Location: $redirect");
                     exit;
                 }
             } else {
