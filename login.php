@@ -7,7 +7,7 @@ require_once __DIR__ . '/header.php';
 
 // 已登录则跳转
 if (isLoggedIn()) {
-    header('Location: /turtle-soup/index.php');
+    header('Location: /index.php');
     exit;
 }
 
@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $error = '该账号已被封禁';
                 } else {
                     $_SESSION['user_id'] = $user['id'];
-                    header('Location: /turtle-soup/index.php');
+                    header('Location: /index.php');
                     exit;
                 }
             } else {
@@ -69,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </form>
 
         <p class="text-center text-muted mt-2" style="font-size: 0.85rem;">
-            还没有账号？<a href="/turtle-soup/register.php">立即注册</a>
+            还没有账号？<a href="/register.php">立即注册</a>
         </p>
     </div>
 </div>

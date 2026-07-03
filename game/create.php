@@ -67,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <?php if ($success): ?>
         <div class="alert alert-success">
             🎉 房间创建成功！<br>
-            <a href="/turtle-soup/game/room.php?id=<?= $redirect_id ?>" class="btn btn-primary mt-2">进入房间</a>
+            <a href="/game/room.php?id=<?= $redirect_id ?>" class="btn btn-primary mt-2">进入房间</a>
         </div>
         <?php else: ?>
         <?php if ($error): ?>

@@ -50,7 +50,7 @@ jobs:
           port: ${{ secrets.FTP_PORT }}
           protocol: ftp
           local-dir: ./
-          server-dir: /htdocs/turtle-soup/
+          server-dir: /htdocs/
           dangerous-clean-slate: false
           exclude: |
             **/.git*
@@ -65,7 +65,7 @@ jobs:
         run: |
           echo "=============================="
           echo "  ✅ 部署到 InfinityFree 完成"
-          echo "  📂 位置: /htdocs/turtle-soup/"
+          echo "  📂 位置: /htdocs/（网站根目录）"
           echo "  ⚠️  注意: 生产环境的 config.php"
           echo "     已在服务器保留，未被覆盖"
           echo "=============================="

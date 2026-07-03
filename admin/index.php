@@ -27,9 +27,9 @@ $current_admin_page = 'dashboard';
 
     <div class="admin-layout">
         <div class="admin-sidebar">
-            <a href="/turtle-soup/admin/index.php" class="active">📊 仪表盘</a>
-            <a href="/turtle-soup/admin/soups.php">🐢 汤谱管理</a>
-            <a href="/turtle-soup/admin/users.php">👥 用户管理</a>
+            <a href="/admin/index.php" class="active">📊 仪表盘</a>
+            <a href="/admin/soups.php">🐢 汤谱管理</a>
+            <a href="/admin/users.php">👥 用户管理</a>
         </div>
 
         <div>
@@ -63,9 +63,9 @@ $current_admin_page = 'dashboard';
             <div class="card">
                 <div class="card-header">🚀 快速操作</div>
                 <div style="display: flex; gap: 12px; flex-wrap: wrap;">
-                    <a href="/turtle-soup/admin/soups.php" class="btn btn-primary">管理汤谱</a>
-                    <a href="/turtle-soup/admin/users.php" class="btn btn-secondary">管理用户</a>
-                    <a href="/turtle-soup/game/index.php" class="btn btn-secondary">查看大厅</a>
+                    <a href="/admin/soups.php" class="btn btn-primary">管理汤谱</a>
+                    <a href="/admin/users.php" class="btn btn-secondary">管理用户</a>
+                    <a href="/game/index.php" class="btn btn-secondary">查看大厅</a>
                 </div>
             </div>
         </div>

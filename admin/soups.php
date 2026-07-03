@@ -84,9 +84,9 @@ if (isset($_GET['edit'])) {
 
     <div class="admin-layout">
         <div class="admin-sidebar">
-            <a href="/turtle-soup/admin/index.php">📊 仪表盘</a>
-            <a href="/turtle-soup/admin/soups.php" class="active">🐢 汤谱管理</a>
-            <a href="/turtle-soup/admin/users.php">👥 用户管理</a>
+            <a href="/admin/index.php">📊 仪表盘</a>
+            <a href="/admin/soups.php" class="active">🐢 汤谱管理</a>
+            <a href="/admin/users.php">👥 用户管理</a>
         </div>
 
         <div>
@@ -99,7 +99,7 @@ if (isset($_GET['edit'])) {
                 <div class="card-header">
                     <?= $editMode ? '✏️ 编辑汤谱' : '➕ 新增汤谱' ?>
                     <?php if ($editMode): ?>
-                    <a href="/turtle-soup/admin/soups.php" class="btn btn-sm btn-secondary">取消编辑</a>
+                    <a href="/admin/soups.php" class="btn btn-sm btn-secondary">取消编辑</a>
                     <?php endif; ?>
                 </div>
 
@@ -180,7 +180,7 @@ if (isset($_GET['edit'])) {
                             <?php foreach ($turtles as $t): ?>
                             <tr>
                                 <td><?= $t['id'] ?></td>
-                                <td><a href="/turtle-soup/soup/detail.php?id=<?= $t['id'] ?>"><?= h($t['title']) ?></a></td>
+                                <td><a href="/soup/detail.php?id=<?= $t['id'] ?>"><?= h($t['title']) ?></a></td>
                                 <td><?= str_repeat('⭐', (int)$t['difficulty']) ?></td>
                                 <td style="font-size: 0.78rem;"><?= h($t['tags']) ?></td>
                                 <td>

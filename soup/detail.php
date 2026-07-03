@@ -49,7 +49,7 @@ try {
 
 <div class="container">
     <!-- 返回按钮 -->
-    <a href="/turtle-soup/soup/list.php" class="btn btn-secondary btn-sm mb-2">← 返回汤谱库</a>
+    <a href="/soup/list.php" class="btn btn-secondary btn-sm mb-2">← 返回汤谱库</a>
 
     <div class="card">
         <div class="flex-between" style="flex-wrap: wrap; gap: 12px;">
@@ -79,7 +79,7 @@ try {
 
         <?php if ($parent): ?>
         <div style="margin-top: 8px;">
-            <a href="/turtle-soup/soup/detail.php?id=<?= $parent['id'] ?>" class="btn btn-sm btn-secondary">
+            <a href="/soup/detail.php?id=<?= $parent['id'] ?>" class="btn btn-sm btn-secondary">
                 ← 返回合集：<?= h($parent['title']) ?>
             </a>
         </div>
@@ -88,7 +88,7 @@ try {
         <?php if ($turtle['tags']): ?>
         <div style="margin: 12px 0;">
             <?php foreach (explode(',', $turtle['tags']) as $tag): ?>
-            <a href="/turtle-soup/soup/list.php?tag=<?= urlencode(trim($tag)) ?>" class="tag"><?= h(trim($tag)) ?></a>
+            <a href="/soup/list.php?tag=<?= urlencode(trim($tag)) ?>" class="tag"><?= h(trim($tag)) ?></a>
             <?php endforeach; ?>
         </div>
         <?php endif; ?>
@@ -130,7 +130,7 @@ try {
 
     <!-- 操作按钮 -->
     <div class="flex-center mt-2" style="gap: 12px;">
-        <a href="/turtle-soup/game/create.php" class="btn btn-primary">🎮 用这碗汤创建房间</a>
+        <a href="/game/create.php" class="btn btn-primary">🎮 用这碗汤创建房间</a>
         <button class="btn btn-secondary" onclick="likeSoup()">👍 点赞</button>
     </div>
 
@@ -140,7 +140,7 @@ try {
         <h3 style="font-size: 1rem; color: var(--purple); margin-bottom: 16px;">📦 本合集包含以下子条目</h3>
         <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 10px;">
             <?php foreach ($children as $ch): ?>
-            <a href="/turtle-soup/soup/detail.php?id=<?= $ch['id'] ?>" class="soup-card" style="display: flex; align-items: center; gap: 10px; padding: 14px; color: inherit; text-decoration: none;">
+            <a href="/soup/detail.php?id=<?= $ch['id'] ?>" class="soup-card" style="display: flex; align-items: center; gap: 10px; padding: 14px; color: inherit; text-decoration: none;">
                 <span class="difficulty-stars"><?= str_repeat('⭐', (int)$ch['difficulty']) ?></span>
                 <span style="flex: 1;"><?= h($ch['title']) ?></span>
                 <?php if (isset($ch['ai_playable']) && !$ch['ai_playable']): ?>
@@ -169,7 +169,7 @@ function toggleBottom() {
 }
 
 async function likeSoup() {
-    const resp = await fetch('/turtle-soup/api/like_soup.php', {
+    const resp = await fetch('/api/like_soup.php', {
         method: 'POST',
         body: new URLSearchParams({ turtle_id: <?= $id ?> })
     });

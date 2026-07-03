@@ -294,7 +294,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // 房主操作函数
 async function startGame() {
     if (!confirm('开始游戏？开始后玩家将看到汤面并可以提问。')) return;
-    const resp = await fetch('/turtle-soup/api/room_action.php', {
+    const resp = await fetch('/api/room_action.php', {
         method: 'POST',
         body: new URLSearchParams({ room_id: ROOM_ID, action: 'start' })
     });
@@ -305,7 +305,7 @@ async function startGame() {
 
 async function endGame() {
     if (!confirm('确定结束游戏？将公布汤底。')) return;
-    const resp = await fetch('/turtle-soup/api/room_action.php', {
+    const resp = await fetch('/api/room_action.php', {
         method: 'POST',
         body: new URLSearchParams({ room_id: ROOM_ID, action: 'end' })
     });
@@ -316,7 +316,7 @@ async function endGame() {
 
 async function updateRoomTurtle() {
     const turtleId = document.getElementById('select-turtle').value;
-    await fetch('/turtle-soup/api/room_action.php', {
+    await fetch('/api/room_action.php', {
         method: 'POST',
         body: new URLSearchParams({ room_id: ROOM_ID, action: 'update', turtle_id: turtleId })
     });
@@ -325,7 +325,7 @@ async function updateRoomTurtle() {
 
 async function updateRoomMode() {
     const mode = document.getElementById('select-mode').value;
-    await fetch('/turtle-soup/api/room_action.php', {
+    await fetch('/api/room_action.php', {
         method: 'POST',
         body: new URLSearchParams({ room_id: ROOM_ID, action: 'update', mode: mode })
     });
@@ -335,7 +335,7 @@ async function updateRoomMode() {
 async function updateRoomChild() {
     const childId = document.getElementById('select-child').value;
     if (!childId || childId === '0') return;
-    await fetch('/turtle-soup/api/room_action.php', {
+    await fetch('/api/room_action.php', {
         method: 'POST',
         body: new URLSearchParams({ room_id: ROOM_ID, action: 'update', turtle_id: childId })
     });

@@ -6,7 +6,7 @@ $page_title = '注册';
 require_once __DIR__ . '/header.php';
 
 if (isLoggedIn()) {
-    header('Location: /turtle-soup/index.php');
+    header('Location: /index.php');
     exit;
 }
 
@@ -59,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <?php if ($success): ?>
         <div class="alert alert-success">
-            🎉 注册成功！<a href="/turtle-soup/login.php">点击这里登录</a>
+            🎉 注册成功！<a href="/login.php">点击这里登录</a>
         </div>
         <?php elseif ($error): ?>
         <div class="alert alert-error"><?= h($error) ?></div>
@@ -91,7 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </form>
 
         <p class="text-center text-muted mt-2" style="font-size: 0.85rem;">
-            已有账号？<a href="/turtle-soup/login.php">立即登录</a>
+            已有账号？<a href="/login.php">立即登录</a>
         </p>
         <?php endif; ?>
     </div>

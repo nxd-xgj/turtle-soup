@@ -32,13 +32,13 @@ try {
     <p>和朋友一起，揭开每一碗汤的谜底。<br>支持 AI 主持和真人主持双模式，免费畅玩。</p>
     <div class="hero-actions">
         <?php if ($user): ?>
-        <a href="/turtle-soup/game/create.php" class="btn btn-primary btn-lg">🎮 创建房间</a>
-        <a href="/turtle-soup/game/index.php" class="btn btn-secondary btn-lg">🚪 加入房间</a>
+        <a href="/game/create.php" class="btn btn-primary btn-lg">🎮 创建房间</a>
+        <a href="/game/index.php" class="btn btn-secondary btn-lg">🚪 加入房间</a>
         <?php else: ?>
-        <a href="/turtle-soup/register.php" class="btn btn-primary btn-lg">🚀 立即开始</a>
-        <a href="/turtle-soup/login.php" class="btn btn-secondary btn-lg">🔑 登录</a>
+        <a href="/register.php" class="btn btn-primary btn-lg">🚀 立即开始</a>
+        <a href="/login.php" class="btn btn-secondary btn-lg">🔑 登录</a>
         <?php endif; ?>
-        <a href="/turtle-soup/soup/list.php" class="btn btn-secondary btn-lg">📚 浏览汤谱</a>
+        <a href="/soup/list.php" class="btn btn-secondary btn-lg">📚 浏览汤谱</a>
     </div>
 </section>
 
@@ -92,7 +92,7 @@ try {
     <h3 style="font-size: 1.2rem; margin-bottom: 18px;">🔥 热门汤谱</h3>
     <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px;">
         <?php foreach ($featured as $t): ?>
-        <a href="/turtle-soup/soup/detail.php?id=<?= $t['id'] ?>" class="soup-card" style="display: block; color: inherit;"
+        <a href="/soup/detail.php?id=<?= $t['id'] ?>" class="soup-card" style="display: block; color: inherit;"
            data-title="<?= h($t['title']) ?>"
            data-tags="<?= h($t['tags']) ?>"
            data-difficulty="<?= $t['difficulty'] ?>">
@@ -121,9 +121,9 @@ try {
         <h3 style="font-size: 1.3rem; margin-bottom: 8px;">🎉 准备好推理了吗？</h3>
         <p style="color: var(--text-secondary); margin-bottom: 20px;">完全免费，无需下载，打开浏览器就能玩</p>
         <?php if ($user): ?>
-        <a href="/turtle-soup/game/create.php" class="btn btn-primary btn-lg">开始推理</a>
+        <a href="/game/create.php" class="btn btn-primary btn-lg">开始推理</a>
         <?php else: ?>
-        <a href="/turtle-soup/register.php" class="btn btn-primary btn-lg">立即注册</a>
+        <a href="/register.php" class="btn btn-primary btn-lg">立即注册</a>
         <?php endif; ?>
     </div>
 </div>

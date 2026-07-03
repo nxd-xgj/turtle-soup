@@ -5,6 +5,6 @@
     <span style="font-size:0.7rem;">Powered by PHP + MySQL · 零成本运营</span>
 </footer>
 
-<script src="/turtle-soup/assets/script.js"></script>
+<script src="/assets/script.js"></script>
 </body>
 </html>

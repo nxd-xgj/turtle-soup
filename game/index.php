@@ -35,7 +35,7 @@ try {
             <h2 style="font-size: 1.5rem;">🎮 游戏大厅</h2>
             <p class="text-muted text-small mt-1">选择一个房间加入，或创建自己的推理派对</p>
         </div>
-        <a href="/turtle-soup/game/create.php" class="btn btn-primary btn-lg">✨ 创建房间</a>
+        <a href="/game/create.php" class="btn btn-primary btn-lg">✨ 创建房间</a>
     </div>
 
     <?php if (empty($rooms)): ?>
@@ -43,12 +43,12 @@ try {
         <div style="font-size: 3rem; margin-bottom: 16px;">🪹</div>
         <h3>还没有活跃的房间</h3>
         <p class="text-muted mt-1">快来创建第一个推理派对吧！</p>
-        <a href="/turtle-soup/game/create.php" class="btn btn-primary mt-2">创建房间</a>
+        <a href="/game/create.php" class="btn btn-primary mt-2">创建房间</a>
     </div>
     <?php else: ?>
     <div class="room-grid">
         <?php foreach ($rooms as $room): ?>
-        <a href="/turtle-soup/game/room.php?id=<?= $room['id'] ?>" class="room-card" style="display: block; color: inherit;">
+        <a href="/game/room.php?id=<?= $room['id'] ?>" class="room-card" style="display: block; color: inherit;">
             <div class="room-title">
                 <?= h($room['name']) ?>
             </div>

@@ -58,9 +58,9 @@ try {
 
     <div class="admin-layout">
         <div class="admin-sidebar">
-            <a href="/turtle-soup/admin/index.php">📊 仪表盘</a>
-            <a href="/turtle-soup/admin/soups.php">🐢 汤谱管理</a>
-            <a href="/turtle-soup/admin/users.php" class="active">👥 用户管理</a>
+            <a href="/admin/index.php">📊 仪表盘</a>
+            <a href="/admin/soups.php">🐢 汤谱管理</a>
+            <a href="/admin/users.php" class="active">👥 用户管理</a>
         </div>
 
         <div>

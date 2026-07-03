@@ -111,7 +111,7 @@ try {
     <?php else: ?>
     <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px;">
         <?php foreach ($turtles as $t): ?>
-        <a href="/turtle-soup/soup/detail.php?id=<?= $t['id'] ?>" class="soup-card"
+        <a href="/soup/detail.php?id=<?= $t['id'] ?>" class="soup-card"
            data-title="<?= h($t['title']) ?>"
            data-tags="<?= h($t['tags']) ?>"
            data-difficulty="<?= $t['difficulty'] ?>"
@@ -168,7 +168,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (diff) params.set('difficulty', diff);
         if (sort && sort !== 'newest') params.set('sort', sort);
 
-        window.location.href = '/turtle-soup/soup/list.php' + (params.toString() ? '?' + params.toString() : '');
+        window.location.href = '/soup/list.php' + (params.toString() ? '?' + params.toString() : '');
     }
 
     ['soup-search', 'tag-filter', 'diff-filter', 'sort-filter'].forEach(id => {
