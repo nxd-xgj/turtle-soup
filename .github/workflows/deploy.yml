@@ -3,7 +3,7 @@
 #
 # 工作流程：
 # 1. 推送代码到 GitHub main 分支
-# 2. 自动通过 FTP 同步到 InfinityFree 服务器
+# 2. 自动通过 FTPS 同步到 InfinityFree 服务器
 # 3. 触发后约 30 秒内完成部署
 #
 # 首次部署前需在 GitHub 仓库设置以下 Secrets：
@@ -24,7 +24,7 @@ on:
 
 jobs:
   deploy:
-    name: 📦 FTP 同步
+    name: 📦 FTPS 同步
     runs-on: ubuntu-latest
 
     steps:
@@ -41,32 +41,49 @@ jobs:
                    -not -name 'init-deploy.sh' | sort
           echo "======================"
 
-      - name: 📤 FTP 同步到 InfinityFree
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ${{ secrets.FTP_HOST }}
-          username: ${{ secrets.FTP_USER }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          port: ${{ secrets.FTP_PORT }}
-          protocol: ftps
-          security: strict
-          local-dir: ./
-          server-dir: /htdocs/
-          dangerous-clean-slate: false
-          exclude: |
-            **/.git*
-            **/.git/**
-            **/.github/**
-            .gitignore
-            config.php
-            init-deploy.sh
-            README.md
+      - name: 🔧 安装 lftp
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq lftp 2>&1 | tail -3
+
+      - name: 📤 FTPS 同步到 InfinityFree
+        env:
+          FTP_HOST: ${{ secrets.FTP_HOST }}
+          FTP_USER: ${{ secrets.FTP_USER }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          FTP_PORT: ${{ secrets.FTP_PORT }}
+        run: |
+          # 生成要排除的文件列表
+          EXCLUDE=".git|.gitignore|config.php|init-deploy.sh|README.md"
+          
+          echo "📡 连接到 $FTP_HOST ..."
+          lftp -c "
+            set ftp:ssl-force true
+            set ftp:ssl-protect-data true
+            set ssl:verify-certificate no
+            set net:max-retries 3
+            set net:timeout 30
+            open -p $FTP_PORT -u \"$FTP_USER\",\"$FTP_PASSWORD\" $FTP_HOST
+            echo '✅ 连接成功，开始同步...'
+            
+            # 镜像上传（递归同步本地目录到远程 /htdocs/）
+            mirror --reverse \
+              --verbose \
+              --exclude-glob .git \
+              --exclude-glob .gitignore \
+              --exclude-glob config.php \
+              --exclude-glob init-deploy.sh \
+              --exclude-glob README.md \
+              --exclude-glob .github \
+              --exclude-glob .git/ \
+              . /htdocs/
+            
+            echo '✅ 同步完成！'
+          "
 
       - name: 🎯 部署报告
         run: |
           echo "=============================="
           echo "  ✅ 部署到 InfinityFree 完成"
-          echo "  📂 位置: /htdocs/（网站根目录）"
-          echo "  ⚠️  注意: 生产环境的 config.php"
-          echo "     已在服务器保留，未被覆盖"
+          echo "  📂 同步至: /htdocs/（网站根目录）"
+          echo "  ⚡ 使用 lftp + FTPS (TLS)"
+          echo "  ⚠️  生产环境 config.php 未被覆盖"
           echo "=============================="
