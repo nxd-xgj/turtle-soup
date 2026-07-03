@@ -48,7 +48,8 @@ jobs:
           username: ${{ secrets.FTP_USER }}
           password: ${{ secrets.FTP_PASSWORD }}
           port: ${{ secrets.FTP_PORT }}
-          protocol: ftp
+          protocol: ftps
+          security: strict
           local-dir: ./
           server-dir: /htdocs/
           dangerous-clean-slate: false
