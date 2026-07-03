@@ -3,6 +3,7 @@
  * 海龟汤种子数据 — 许二木海龟汤全收录 (v2.0)
  * 
  * 使用方法: php seed.php
+ * 也可被安装器引入: define('SEED_DATA_ONLY', true); require 'seed.php';
  * 包含 S1 ~ S3 赛季全部海龟汤条目
  * 
  * v2.0 改进:
@@ -12,11 +13,12 @@
  *   - parent_id 父子结构
  */
 
-require_once __DIR__ . '/config.php';
-
-$db = getDB();
-
-$stmt = $db->prepare('INSERT INTO turtles (title, surface, bottom, difficulty, tags, ai_prompt, ai_playable, parent_id, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)');
+// 如果只是要数据，跳过执行部分
+if (!defined('SEED_DATA_ONLY')) {
+    require_once __DIR__ . '/config.php';
+    $db = getDB();
+    $stmt = $db->prepare('INSERT INTO turtles (title, surface, bottom, difficulty, tags, ai_prompt, ai_playable, parent_id, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)');
+}
 
 $entries = [];
 
@@ -4574,6 +4576,10 @@ $total = count($entries);
 $playable = 0;
 $unplayable = 0;
 foreach ($entries as $e) { if ($e["ai_playable"]) $playable++; else $unplayable++; }
+
+if (defined('SEED_DATA_ONLY')) {
+    return $entries;
+}
 
 echo "开始导入海龟汤种子数据 (v2.0)...\n";
 echo "总计: {$total} 条 (AI可玩: {$playable}, 不可玩: {$unplayable})\n\n";
