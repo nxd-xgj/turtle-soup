@@ -5,6 +5,12 @@
 # 1. 推送代码到 GitHub main 分支
 # 2. 自动通过 FTP 同步到 InfinityFree 服务器
 # 3. 触发后约 30 秒内完成部署
+#
+# 首次部署前需在 GitHub 仓库设置以下 Secrets：
+#   FTP_HOST      → ftpupload.net
+#   FTP_USER      → if0_42327900
+#   FTP_PASSWORD  → (你的 FTP 密码)
+#   FTP_PORT      → 21
 # ============================================
 
 name: 🚀 自动部署到 InfinityFree
@@ -12,9 +18,9 @@ name: 🚀 自动部署到 InfinityFree
 on:
   push:
     branches:
-      - main          # push 到 main 分支时自动部署
-      - master        # push 到 master 分支时也触发
-  workflow_dispatch:   # 也支持手动触发
+      - main
+      - master
+  workflow_dispatch:
 
 jobs:
   deploy:
@@ -25,12 +31,15 @@ jobs:
       - name: 📥 检出代码
         uses: actions/checkout@v4
 
-      - name: 📋 显示将要部署的文件
+      - name: 📋 文件清单预览
         run: |
-          echo "=== 文件清单 ==="
-          find . -type f -not -path './.git/*' -not -path './.github/*' | sort
-          echo "================"
-          echo "共 $(find . -type f -not -path './.git/*' -not -path './.github/*' | wc -l) 个文件"
+          echo "=== 待部署文件 ==="
+          find . -type f -not -path './.git/*' -not -path './.github/*' \
+                   -not -name '.gitignore' \
+                   -not -name 'config.php' \
+                   -not -name 'README.md' \
+                   -not -name 'init-deploy.sh' | sort
+          echo "======================"
 
       - name: 📤 FTP 同步到 InfinityFree
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
@@ -38,22 +47,25 @@ jobs:
           server: ${{ secrets.FTP_HOST }}
           username: ${{ secrets.FTP_USER }}
           password: ${{ secrets.FTP_PASSWORD }}
-          port: ${{ secrets.FTP_PORT || 21 }}
+          port: ${{ secrets.FTP_PORT }}
           protocol: ftp
-          local-dir: ./                          # 从仓库根目录
-          server-dir: /htdocs/turtle-soup/       # 部署到 htdocs 的子目录
-          dangerous-clean-slate: false            # 不清除服务器已有文件
+          local-dir: ./
+          server-dir: /htdocs/turtle-soup/
+          dangerous-clean-slate: false
           exclude: |
             **/.git*
-            **/.git/**                            # 不推送 .git
-            **/.github/**                         # 不推送 workflow 配置
+            **/.git/**
+            **/.github/**
             .gitignore
+            config.php
             init-deploy.sh
             README.md
 
-      - name: ✅ 部署完成
+      - name: 🎯 部署报告
         run: |
           echo "=============================="
-          echo "  ✅ 部署完成！"
-          echo "  🌐 https://turtlesoup.free.nf"
+          echo "  ✅ 部署到 InfinityFree 完成"
+          echo "  📂 位置: /htdocs/turtle-soup/"
+          echo "  ⚠️  注意: 生产环境的 config.php"
+          echo "     已在服务器保留，未被覆盖"
           echo "=============================="
