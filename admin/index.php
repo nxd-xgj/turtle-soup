@@ -30,7 +30,8 @@ $current_admin_page = 'dashboard';
             <a href="/admin/index.php" class="active">📊 仪表盘</a>
             <a href="/admin/soups.php">🐢 汤谱管理</a>
             <a href="/admin/users.php">👥 用户管理</a>
-        </div>
+            <a href="/admin/ai_manual.php">🤖 AI 主持手册</a>
+        </div> <!-- end admin-sidebar -->
 
         <div>
             <div class="stats-grid">

@@ -61,6 +61,7 @@ try {
             <a href="/admin/index.php">📊 仪表盘</a>
             <a href="/admin/soups.php">🐢 汤谱管理</a>
             <a href="/admin/users.php" class="active">👥 用户管理</a>
+            <a href="/admin/ai_manual.php">🤖 AI 主持手册</a>
         </div>
 
         <div>

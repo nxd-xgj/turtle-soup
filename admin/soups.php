@@ -31,12 +31,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $messageType = 'error';
             } else {
                 if ($action === 'add') {
-                    $stmt = $db->prepare('INSERT INTO turtles (title, surface, bottom, clues, difficulty, tags, author_id, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
-                    $stmt->execute([$title, $surface, $bottom, $clues, max(1, min(3, $difficulty)), $tags, $_SESSION['user_id'], $status]);
+                    $stmt = $db->prepare('INSERT INTO turtles (title, surface, bottom, clues, difficulty, tags, ai_prompt, ai_playable, author_id, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
+                    $stmt->execute([$title, $surface, $bottom, $clues, max(1, min(3, $difficulty)), $tags, input('ai_prompt') ?: null, (int)input('ai_playable', '1'), $_SESSION['user_id'], $status]);
                     $message = '汤谱添加成功！';
                 } else {
-                    $stmt = $db->prepare('UPDATE turtles SET title=?, surface=?, bottom=?, clues=?, difficulty=?, tags=?, status=? WHERE id=?');
-                    $stmt->execute([$title, $surface, $bottom, $clues, max(1, min(3, $difficulty)), $tags, $status, $soup_id]);
+                    $stmt = $db->prepare('UPDATE turtles SET title=?, surface=?, bottom=?, clues=?, difficulty=?, tags=?, ai_prompt=?, ai_playable=?, status=? WHERE id=?');
+                    $stmt->execute([$title, $surface, $bottom, $clues, max(1, min(3, $difficulty)), $tags, input('ai_prompt') ?: null, (int)input('ai_playable', '1'), $status, $soup_id]);
                     $message = '汤谱更新成功！';
                 }
                 $messageType = 'success';
@@ -87,6 +87,7 @@ if (isset($_GET['edit'])) {
             <a href="/admin/index.php">📊 仪表盘</a>
             <a href="/admin/soups.php" class="active">🐢 汤谱管理</a>
             <a href="/admin/users.php">👥 用户管理</a>
+            <a href="/admin/ai_manual.php">🤖 AI 主持手册</a>
         </div>
 
         <div>
@@ -142,6 +143,20 @@ if (isset($_GET['edit'])) {
                     <div class="form-group">
                         <label>关键线索链</label>
                         <textarea name="clues" class="form-input" rows="2"><?= h($editTurtle['clues'] ?? '') ?></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>🤖 AI 可玩性</label>
+                        <select name="ai_playable" class="form-input">
+                            <option value="1" <?= (($editTurtle['ai_playable'] ?? 1) == 1) ? 'selected' : '' ?>>✅ 适合 AI 主持</option>
+                            <option value="0" <?= (($editTurtle['ai_playable'] ?? 1) == 0) ? 'selected' : '' ?>>⚠️ 不适合 AI（建议真人主持）</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>🤖 AI 主持人提示词</label>
+                        <textarea name="ai_prompt" class="form-input" rows="6" placeholder="AI 主持模式下的提示词模板，包含汤面、汤底和判断线索"><?= h($editTurtle['ai_prompt'] ?? '') ?></textarea>
+                        <p class="input-hint mt-1">提示词结构：开场设定 → 汤面 → 汤底 → 关键判断线索 → 主持规则。留空则使用离线关键词匹配。</p>
                     </div>
 
                     <div class="form-group">
